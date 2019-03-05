@@ -1,0 +1,10 @@
+kafka:
+  server: localhost:9092
+  topic:
+    intradayriskset: IntraDayRiskSet
+    intradayrisktick: IntraDayRiskTick
+    intradaytrade: IntraDayTrade
+    calccontext: CalculationContext
+    market: MarketEnv
+zookeeper:
+  server: zookeepr.kafka.svc.cluster.local:2181
