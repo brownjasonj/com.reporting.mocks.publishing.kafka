@@ -3,11 +3,12 @@ package com.reporting.mocks.publishing.kafka;
 import com.reporting.mocks.interfaces.publishing.IResultPublisher;
 import com.reporting.mocks.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ResultKafkaPublisher implements IResultPublisher {
-    protected KafkaConfig appConfig;
+    KafkaConfig appConfig;
 
     protected RiskResultSetKafkaProducer riskResultSetProducer;
     protected RiskResultKafkaProducer riskResultProducer;
