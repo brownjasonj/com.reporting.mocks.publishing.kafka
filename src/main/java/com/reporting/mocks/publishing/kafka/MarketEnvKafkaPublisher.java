@@ -1,6 +1,7 @@
 package com.reporting.mocks.publishing.kafka;
 
 import com.google.gson.Gson;
+import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.MarketEnv;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -15,8 +16,8 @@ public class MarketEnvKafkaPublisher {
     private Properties kafkaProperties;
     private Producer producer;
 
-    public MarketEnvKafkaPublisher(KafkaConfig appConfig) {
-        this.TOPIC = appConfig.getMarketEnvTopic();
+    public MarketEnvKafkaPublisher(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
+        this.TOPIC = resultsPublisherConfiguration.getMarketEnvTopic();
         this.BOOTSTRAPSERVER = appConfig.getKafkaServer();
 
         this.kafkaProperties = new Properties();

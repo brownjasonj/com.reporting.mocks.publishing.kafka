@@ -1,6 +1,7 @@
 package com.reporting.mocks.publishing.kafka;
 
 import com.reporting.mocks.interfaces.publishing.IResultPublisher;
+import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class ResultKafkaPublisher implements IResultPublisher {
     KafkaConfig appConfig;
 
+    protected IResultPublisherConfiguration resultsPublisherConfiguration;
     protected RiskResultSetKafkaProducer riskResultSetProducer;
     protected RiskResultKafkaProducer riskResultProducer;
     protected CalculationContextKafkaProducer calculationContextProducer;
@@ -18,11 +20,15 @@ public class ResultKafkaPublisher implements IResultPublisher {
 
     public ResultKafkaPublisher() {
         this.appConfig = new KafkaConfig();
-        this.riskResultSetProducer = new RiskResultSetKafkaProducer(appConfig);
-        this.riskResultProducer = new RiskResultKafkaProducer(appConfig);
-        this.calculationContextProducer = new CalculationContextKafkaProducer(appConfig);
-        this.tradeKafkaPublisher = new TradeKafkaPublisher(appConfig);
-        this.marketEnvKafkaPublisher = new MarketEnvKafkaPublisher(appConfig);
+    }
+
+    @Override
+    public void init(IResultPublisherConfiguration iResultPublisherConfiguration) {
+        this.riskResultSetProducer = new RiskResultSetKafkaProducer(iResultPublisherConfiguration, appConfig);
+        this.riskResultProducer = new RiskResultKafkaProducer(iResultPublisherConfiguration, appConfig);
+        this.calculationContextProducer = new CalculationContextKafkaProducer(iResultPublisherConfiguration, appConfig);
+        this.tradeKafkaPublisher = new TradeKafkaPublisher(iResultPublisherConfiguration, appConfig);
+        this.marketEnvKafkaPublisher = new MarketEnvKafkaPublisher(iResultPublisherConfiguration, appConfig);
     }
 
     @Override

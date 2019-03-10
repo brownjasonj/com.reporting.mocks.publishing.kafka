@@ -1,6 +1,7 @@
 package com.reporting.mocks.publishing.kafka;
 
 import com.google.gson.Gson;
+import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.RiskResultSet;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -15,8 +16,8 @@ public class RiskResultSetKafkaProducer {
     private Properties kafkaProperties = null;
     private Producer producer = null;
 
-    public RiskResultSetKafkaProducer(KafkaConfig appConfig) {
-        this.TOPIC = appConfig.getIntradayRiskSetTopic();
+    public RiskResultSetKafkaProducer(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
+        this.TOPIC = resultsPublisherConfiguration.getIntradayRiskSetTopic();
         this.BOOTSTRAPSERVER = appConfig.getKafkaServer();
 
         this.kafkaProperties = new Properties();
