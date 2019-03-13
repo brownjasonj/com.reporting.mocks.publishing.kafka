@@ -4,6 +4,7 @@
 /target/
 
 ### STS ###
+.mvn
 .apt_generated
 .classpath
 .factorypath

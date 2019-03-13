@@ -3,8 +3,6 @@ package com.reporting.mocks.publishing.kafka;
 import com.reporting.mocks.interfaces.publishing.IResultPublisher;
 import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,12 +16,8 @@ public class ResultKafkaPublisher implements IResultPublisher {
     protected TradeKafkaPublisher tradeKafkaPublisher;
     protected MarketEnvKafkaPublisher marketEnvKafkaPublisher;
 
-    public ResultKafkaPublisher() {
+    public ResultKafkaPublisher(IResultPublisherConfiguration iResultPublisherConfiguration) {
         this.appConfig = new KafkaConfig();
-    }
-
-    @Override
-    public void init(IResultPublisherConfiguration iResultPublisherConfiguration) {
         this.riskResultSetProducer = new RiskResultSetKafkaProducer(iResultPublisherConfiguration, appConfig);
         this.riskResultProducer = new RiskResultKafkaProducer(iResultPublisherConfiguration, appConfig);
         this.calculationContextProducer = new CalculationContextKafkaProducer(iResultPublisherConfiguration, appConfig);
