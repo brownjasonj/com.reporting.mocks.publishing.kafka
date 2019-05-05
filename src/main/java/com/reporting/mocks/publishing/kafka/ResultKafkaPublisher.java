@@ -3,6 +3,8 @@ package com.reporting.mocks.publishing.kafka;
 import com.reporting.mocks.interfaces.publishing.IResultPublisher;
 import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.*;
+import com.reporting.mocks.model.risks.Risk;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,10 +42,6 @@ public class ResultKafkaPublisher implements IResultPublisher {
         this.riskResultSetProducer.send(riskResultSet);
     }
 
-
-    @Override
-    public void publishIntradayRiskResult(RiskResult riskResult) { this.riskResultProducer.send(riskResult); }
-
     @Override
     public void publishIntradayTrade(TradeLifecycle tradeLifecycle) {
         this.tradeKafkaPublisher.send(tradeLifecycle);
@@ -52,5 +50,10 @@ public class ResultKafkaPublisher implements IResultPublisher {
     @Override
     public void publishEndofDayRiskRun(RiskResultSet riskResultSet) {
 
+    }
+
+    @Override
+    public void publishIntradayRiskResult(RiskResult<? extends Risk> riskResult) {
+        this.riskResultProducer.send(riskResult);
     }
 }

@@ -15,7 +15,7 @@ public class CalculationContextKafkaProducer {
     private String BOOTSTRAPSERVER = null;
     private String TOPIC = null;
     private Properties kafkaProperties = null;
-    private Producer producer = null;
+    private Producer<UUID,String> producer = null;
 
     public CalculationContextKafkaProducer(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
         this.TOPIC = resultsPublisherConfiguration.getCalculationContextTopic();

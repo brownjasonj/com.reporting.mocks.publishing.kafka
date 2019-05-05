@@ -14,7 +14,7 @@ public class TradeKafkaPublisher {
     private String BOOTSTRAPSERVER = null;
     private String TOPIC = null;
     private Properties kafkaProperties;
-    private Producer producer = null;
+    private Producer<UUID,String> producer = null;
 
     public TradeKafkaPublisher(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
         this.TOPIC = resultsPublisherConfiguration.getIntradayTradeTopic();

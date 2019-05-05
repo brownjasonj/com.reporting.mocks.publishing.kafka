@@ -3,6 +3,8 @@ package com.reporting.mocks.publishing.kafka;
 import com.google.gson.Gson;
 import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.RiskResult;
+import com.reporting.mocks.model.risks.Risk;
+
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -14,7 +16,7 @@ public class RiskResultKafkaProducer {
     private String BOOTSTRAPSERVER = null;
     private String TOPIC = null;
     private Properties kafkaProperties = null;
-    private Producer producer = null;
+    private Producer<UUID, String> producer = null;
 
     public RiskResultKafkaProducer(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
         this.TOPIC = resultsPublisherConfiguration.getIntradayRiskTickTopic();
@@ -30,7 +32,7 @@ public class RiskResultKafkaProducer {
             this.producer = new KafkaProducer<UUID,String>(this.kafkaProperties);
     }
 
-    public void send(RiskResult riskResult) {
+    public void send(RiskResult<? extends Risk> riskResult) {
         if (this.producer != null) {
             Gson gson = new Gson();
             String riskResultJson = gson.toJson(riskResult);

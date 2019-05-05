@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: kafka-pv-2
+  namespace: kafka
+  labels:
+    type: local
+spec:
+  storageClassName: rook-block
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/kafka/data/kafka-pv-2"

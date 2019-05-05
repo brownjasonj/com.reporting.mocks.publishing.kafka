@@ -14,7 +14,7 @@ public class MarketEnvKafkaPublisher {
     private String BOOTSTRAPSERVER;
     private String TOPIC;
     private Properties kafkaProperties;
-    private Producer producer;
+    private Producer<UUID,String> producer;
 
     public MarketEnvKafkaPublisher(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
         this.TOPIC = resultsPublisherConfiguration.getMarketEnvTopic();
