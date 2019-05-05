@@ -11,7 +11,7 @@
 
 	<groupId>com.reporting.mocks.publishing</groupId>
 	<artifactId>kafka</artifactId>
-	<version>0.2.1</version>
+	<version>0.2.2</version>
 	<packaging>jar</packaging>
 
 	<name>kafka</name>
@@ -67,7 +67,7 @@
 		<dependency>
 			<groupId>com.reporting.kafka</groupId>
 			<artifactId>serialization</artifactId>
-			<version>0.3.2-SNAPSHOT</version>
+			<version>0.4.0</version>
 		</dependency>
 	</dependencies>
 

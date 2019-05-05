@@ -5,17 +5,19 @@ import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.*;
 import com.reporting.mocks.model.risks.Risk;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ResultKafkaPublisher implements IResultPublisher {
-    protected IResultPublisherConfiguration resultsPublisherConfiguration;
+    // protected IResultPublisherConfiguration resultsPublisherConfiguration;
     protected RiskResultSetKafkaProducer riskResultSetProducer;
     protected RiskResultKafkaProducer riskResultProducer;
     protected CalculationContextKafkaProducer calculationContextProducer;
     protected TradeKafkaPublisher tradeKafkaPublisher;
     protected MarketEnvKafkaPublisher marketEnvKafkaPublisher;
 
+    @Autowired
     public ResultKafkaPublisher(IResultPublisherConfiguration iResultPublisherConfiguration, KafkaConfig appConfig) {
         this.riskResultSetProducer = new RiskResultSetKafkaProducer(iResultPublisherConfiguration, appConfig);
         this.riskResultProducer = new RiskResultKafkaProducer(iResultPublisherConfiguration, appConfig);
