@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResultKafkaPublisher implements IResultPublisher {
-    KafkaConfig appConfig;
-
     protected IResultPublisherConfiguration resultsPublisherConfiguration;
     protected RiskResultSetKafkaProducer riskResultSetProducer;
     protected RiskResultKafkaProducer riskResultProducer;
@@ -18,8 +16,7 @@ public class ResultKafkaPublisher implements IResultPublisher {
     protected TradeKafkaPublisher tradeKafkaPublisher;
     protected MarketEnvKafkaPublisher marketEnvKafkaPublisher;
 
-    public ResultKafkaPublisher(IResultPublisherConfiguration iResultPublisherConfiguration) {
-        this.appConfig = new KafkaConfig();
+    public ResultKafkaPublisher(IResultPublisherConfiguration iResultPublisherConfiguration, KafkaConfig appConfig) {
         this.riskResultSetProducer = new RiskResultSetKafkaProducer(iResultPublisherConfiguration, appConfig);
         this.riskResultProducer = new RiskResultKafkaProducer(iResultPublisherConfiguration, appConfig);
         this.calculationContextProducer = new CalculationContextKafkaProducer(iResultPublisherConfiguration, appConfig);
