@@ -11,7 +11,7 @@
 
 	<groupId>com.reporting.mocks.publishing</groupId>
 	<artifactId>kafka</artifactId>
-	<version>0.2.2</version>
+	<version>0.3.0</version>
 	<packaging>jar</packaging>
 
 	<name>kafka</name>
@@ -57,12 +57,12 @@
 		<dependency>
 			<groupId>com.reporting.mocks</groupId>
 			<artifactId>model</artifactId>
-			<version>0.9.0</version>
+			<version>0.12.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.reporting.mocks</groupId>
 			<artifactId>interfaces</artifactId>
-			<version>0.9.0</version>
+			<version>0.12.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.reporting.kafka</groupId>
