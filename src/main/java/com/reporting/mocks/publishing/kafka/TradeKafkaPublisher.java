@@ -35,7 +35,23 @@ public class TradeKafkaPublisher {
             Gson gson = new Gson();
             String tradeLifeCycleJson = gson.toJson(tradeLifecycle);
             System.out.println("TradeLifecycle: " + tradeLifeCycleJson);
-            ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, tradeLifecycle.getTrade().getTcn().getId(), tradeLifeCycleJson);
+
+            // a lifecycle event has two trade states, before and after.  however one maybe null in the case
+            // of new and delete.  Since we are using the tcn of a trade as the key for the kafka topic we
+            // have to check which state exists.  In this case we prefer to use the afterstate if possible.
+            UUID kafkaMessageKey = null;
+            if (tradeLifecycle.getTradeAfterLifeCycle() != null) {
+                kafkaMessageKey = tradeLifecycle.getTradeAfterLifeCycle().getTcn().getId();
+            }
+            else if (tradeLifecycle.getTradeBeforeLifeCycle() != null) {
+                kafkaMessageKey = tradeLifecycle.getTradeBeforeLifeCycle().getTcn().getId();
+            }
+            else {
+                kafkaMessageKey = UUID.randomUUID();
+            }
+
+
+            ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, kafkaMessageKey, tradeLifeCycleJson);
             try {
                 this.producer.send(record).get();
             } catch (Exception e) {
