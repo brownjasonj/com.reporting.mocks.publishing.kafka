@@ -2,7 +2,9 @@ package com.reporting.mocks.publishing.kafka;
 
 import com.google.gson.Gson;
 import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
-import com.reporting.mocks.model.MarketEnv;
+import com.reporting.mocks.model.RiskResult;
+import com.reporting.mocks.model.risks.Risk;
+
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -10,14 +12,14 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.util.Properties;
 import java.util.UUID;
 
-public class MarketEnvKafkaPublisher {
-    private String BOOTSTRAPSERVER;
-    private String TOPIC;
-    private Properties kafkaProperties;
-    private Producer<UUID,String> producer;
+public class IntradayRiskResultProducer {
+    private String BOOTSTRAPSERVER = null;
+    private String TOPIC = null;
+    private Properties kafkaProperties = null;
+    private Producer<UUID, String> producer = null;
 
-    public MarketEnvKafkaPublisher(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
-        this.TOPIC = resultsPublisherConfiguration.getMarketEnvTopic();
+    public IntradayRiskResultProducer(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
+        this.TOPIC = resultsPublisherConfiguration.getIntradayRiskTickTopic();
         this.BOOTSTRAPSERVER = appConfig.getKafkaServer();
 
         this.kafkaProperties = new Properties();
@@ -30,10 +32,12 @@ public class MarketEnvKafkaPublisher {
             this.producer = new KafkaProducer<UUID,String>(this.kafkaProperties);
     }
 
-    public void send(MarketEnv marketEnv) {
+    public void send(RiskResult<? extends Risk> riskResult) {
         if (this.producer != null) {
             Gson gson = new Gson();
-            ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, marketEnv.getId().getId(), gson.toJson(marketEnv));
+            String riskResultJson = gson.toJson(riskResult);
+            System.out.println("RiskResult: " + riskResultJson);
+            ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, riskResult.getRiskRunId().getId(), riskResultJson);
             try {
                 this.producer.send(record).get();
             } catch (Exception e) {

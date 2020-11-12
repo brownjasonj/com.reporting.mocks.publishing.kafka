@@ -10,20 +10,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResultKafkaPublisher implements IResultPublisher {
-    // protected IResultPublisherConfiguration resultsPublisherConfiguration;
-    protected RiskResultSetKafkaProducer riskResultSetProducer;
-    protected RiskResultKafkaProducer riskResultProducer;
+    protected IntradayRiskResultSetProducer riskResultSetProducer;
+    protected IntradayRiskResultProducer riskResultProducer;
+    protected EndOfDayRiskResultProducer endOfDayRiskResultProducer;
+    protected EndOfDayRiskResultSetProducer endOfDayRiskResultSetProducer;
+    protected StartOfDayRiskResultProducer startOfDayRiskResultProducer;
+    protected StartOfDayRiskResultSetProducer startOfDayRiskResultSetProducer;
     protected CalculationContextKafkaProducer calculationContextProducer;
-    protected TradeKafkaPublisher tradeKafkaPublisher;
-    protected MarketEnvKafkaPublisher marketEnvKafkaPublisher;
+    protected TradeProducer tradeKafkaPublisher;
+    protected MarketEnvProducer marketEnvKafkaPublisher;
 
     @Autowired
     public ResultKafkaPublisher(IResultPublisherConfiguration iResultPublisherConfiguration, KafkaConfig appConfig) {
-        this.riskResultSetProducer = new RiskResultSetKafkaProducer(iResultPublisherConfiguration, appConfig);
-        this.riskResultProducer = new RiskResultKafkaProducer(iResultPublisherConfiguration, appConfig);
+        this.riskResultSetProducer = new IntradayRiskResultSetProducer(iResultPublisherConfiguration, appConfig);
+        this.riskResultProducer = new IntradayRiskResultProducer(iResultPublisherConfiguration, appConfig);
+        this.endOfDayRiskResultProducer = new EndOfDayRiskResultProducer(iResultPublisherConfiguration, appConfig);
+        this.endOfDayRiskResultSetProducer = new EndOfDayRiskResultSetProducer(iResultPublisherConfiguration, appConfig);
+        this.startOfDayRiskResultProducer = new StartOfDayRiskResultProducer(iResultPublisherConfiguration, appConfig);
+        this.startOfDayRiskResultSetProducer = new StartOfDayRiskResultSetProducer(iResultPublisherConfiguration, appConfig);
         this.calculationContextProducer = new CalculationContextKafkaProducer(iResultPublisherConfiguration, appConfig);
-        this.tradeKafkaPublisher = new TradeKafkaPublisher(iResultPublisherConfiguration, appConfig);
-        this.marketEnvKafkaPublisher = new MarketEnvKafkaPublisher(iResultPublisherConfiguration, appConfig);
+        this.tradeKafkaPublisher = new TradeProducer(iResultPublisherConfiguration, appConfig);
+        this.marketEnvKafkaPublisher = new MarketEnvProducer(iResultPublisherConfiguration, appConfig);
     }
 
     @Override
@@ -47,12 +54,27 @@ public class ResultKafkaPublisher implements IResultPublisher {
     }
 
     @Override
-    public void publishEndofDayRiskRun(RiskResultSet riskResultSet) {
-
+    public void publishIntradayRiskResult(RiskResult<? extends Risk> riskResult) {
+        this.riskResultProducer.send(riskResult);
     }
 
     @Override
-    public void publishIntradayRiskResult(RiskResult<? extends Risk> riskResult) {
-        this.riskResultProducer.send(riskResult);
+    public void publishEndOfDayRiskResultSet(RiskResultSet riskResultSet) {
+        this.endOfDayRiskResultSetProducer.send(riskResultSet);
+    }
+
+    @Override
+    public void publishEndOfDayRiskResult(RiskResult<? extends Risk> riskResult) {
+        this.endOfDayRiskResultProducer.send(riskResult);
+    }
+
+    @Override
+    public void publishStartOfDayRiskResultSet(RiskResultSet riskResultSet) {
+        this.startOfDayRiskResultSetProducer.send(riskResultSet);
+    }
+
+    @Override
+    public void publishStartOfDayRiskResult(RiskResult<? extends Risk> riskResult) {
+        this.startOfDayRiskResultProducer.send(riskResult);
     }
 }

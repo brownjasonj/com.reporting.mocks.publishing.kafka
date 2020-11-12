@@ -10,13 +10,13 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.util.Properties;
 import java.util.UUID;
 
-public class TradeKafkaPublisher {
+public class TradeProducer {
     private String BOOTSTRAPSERVER = null;
     private String TOPIC = null;
     private Properties kafkaProperties;
     private Producer<UUID,String> producer = null;
 
-    public TradeKafkaPublisher(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
+    public TradeProducer(IResultPublisherConfiguration resultsPublisherConfiguration, KafkaConfig appConfig) {
         this.TOPIC = resultsPublisherConfiguration.getIntradayTradeTopic();
         this.BOOTSTRAPSERVER = appConfig.getKafkaServer();
 

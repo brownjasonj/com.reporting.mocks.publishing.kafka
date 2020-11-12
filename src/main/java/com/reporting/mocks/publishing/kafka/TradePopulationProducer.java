@@ -8,13 +8,13 @@ import com.reporting.mocks.model.TradePopulation;
 // import java.util.Properties;
 // import java.util.UUID;
 
-public class TradePopulationKafkaProducer {
+public class TradePopulationProducer {
 //     private final String BOOTSTRAPSERVER =  "localhost:9092";
 //    private final String TRADEPOPULATUONTOPIC = "TradePopulation";
 //     private Properties kafkaProperties;
 //    private Producer<UUID,TradePopulation> producer;
 
-    public TradePopulationKafkaProducer() {
+    public TradePopulationProducer() {
         // this.kafkaProperties = new Properties();
 
         // this.kafkaProperties.put("bootstrap.servers", this.BOOTSTRAPSERVER);
