@@ -33,6 +33,9 @@ public class MarketEnvProducer {
     public void send(MarketEnv marketEnv) {
         if (this.producer != null) {
             Gson gson = new Gson();
+
+            System.out.println("MKT >>> " + marketEnv.getId() + " " + marketEnv.getType() + " " + marketEnv.getPricingGroup().getName());
+
             ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, marketEnv.getId().getId(), gson.toJson(marketEnv));
             try {
                 this.producer.send(record).get();

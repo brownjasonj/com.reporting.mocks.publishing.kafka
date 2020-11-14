@@ -3,6 +3,7 @@ package com.reporting.mocks.publishing.kafka;
 import com.google.gson.Gson;
 import com.reporting.mocks.interfaces.publishing.IResultPublisherConfiguration;
 import com.reporting.mocks.model.TradeLifecycle;
+import com.reporting.mocks.model.trade.Trade;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -30,11 +31,24 @@ public class TradeProducer {
             this.producer = new KafkaProducer<UUID,String>(this.kafkaProperties);
     }
 
+    protected void printTradeEvent(TradeLifecycle tradeLifecycle) {
+        Trade trade = null;
+        switch (tradeLifecycle.getLifecycleType()) {
+            case New:
+            case Modify:
+                trade = tradeLifecycle.getTradeAfterLifeCycle();
+                break;
+            case Delete:
+                trade = tradeLifecycle.getTradeBeforeLifeCycle();
+        }
+        System.out.println("TLE >>> " + tradeLifecycle.getLifecycleType() + " " + trade.getBook() + " " + trade.getTradeType() + " " + trade.getTcn() + " " );
+    }
+
     public void send(TradeLifecycle tradeLifecycle) {
         if (producer != null) {
             Gson gson = new Gson();
             String tradeLifeCycleJson = gson.toJson(tradeLifecycle);
-            System.out.println("TradeLifecycle: " + tradeLifeCycleJson);
+            printTradeEvent(tradeLifecycle);
 
             // a lifecycle event has two trade states, before and after.  however one maybe null in the case
             // of new and delete.  Since we are using the tcn of a trade as the key for the kafka topic we

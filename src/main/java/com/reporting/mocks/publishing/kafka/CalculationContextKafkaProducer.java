@@ -6,6 +6,7 @@ import com.reporting.mocks.model.CalculationContext;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import scala.reflect.internal.pickling.UnPickler;
 
 import java.util.Properties;
 import java.util.UUID;
@@ -34,6 +35,9 @@ public class CalculationContextKafkaProducer {
     public void send(CalculationContext calculationContext) {
         if (this.producer != null) {
             Gson gson = new Gson();
+
+            System.out.println("CCC >>> " + calculationContext.getPricingGroup().getName() + " " + calculationContext.getMarkets());
+
             ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, calculationContext.getCalculationContextId().getId(), gson.toJson(calculationContext));
             try {
                 this.producer.send(record).get();
