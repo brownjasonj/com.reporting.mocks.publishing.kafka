@@ -9,8 +9,10 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class MarketEnvProducer {
+    private static final Logger LOGGER = Logger.getLogger( MarketEnvProducer.class.getName() );
     private String BOOTSTRAPSERVER;
     private String TOPIC;
     private Properties kafkaProperties;
@@ -34,7 +36,7 @@ public class MarketEnvProducer {
         if (this.producer != null) {
             Gson gson = new Gson();
 
-            System.out.println("MKT >>> " + marketEnv.getId() + " " + marketEnv.getType() + " " + marketEnv.getPricingGroup().getName());
+            LOGGER.info("MKT >>> " + marketEnv.getId() + " " + marketEnv.getType() + " " + marketEnv.getPricingGroup().getName());
 
             ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, marketEnv.getId().getId(), gson.toJson(marketEnv));
             try {

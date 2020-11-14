@@ -10,8 +10,10 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class TradeProducer {
+    private static final Logger LOGGER = Logger.getLogger( TradeProducer.class.getName() );
     private String BOOTSTRAPSERVER = null;
     private String TOPIC = null;
     private Properties kafkaProperties;
@@ -41,7 +43,7 @@ public class TradeProducer {
             case Delete:
                 trade = tradeLifecycle.getTradeBeforeLifeCycle();
         }
-        System.out.println("TLE >>> " + tradeLifecycle.getLifecycleType() + " " + trade.getBook() + " " + trade.getTradeType() + " " + trade.getTcn() + " " );
+        LOGGER.info("TLE >>> " + tradeLifecycle.getLifecycleType() + " " + trade.getBook() + " " + trade.getTradeType() + " " + trade.getTcn() + " " );
     }
 
     public void send(TradeLifecycle tradeLifecycle) {

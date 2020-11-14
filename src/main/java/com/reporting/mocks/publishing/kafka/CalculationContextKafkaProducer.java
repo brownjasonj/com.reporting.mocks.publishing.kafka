@@ -10,9 +10,11 @@ import scala.reflect.internal.pickling.UnPickler;
 
 import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 
 public class CalculationContextKafkaProducer {
+    private static final Logger LOGGER = Logger.getLogger( CalculationContextKafkaProducer.class.getName() );
     private String BOOTSTRAPSERVER = null;
     private String TOPIC = null;
     private Properties kafkaProperties = null;
@@ -36,7 +38,7 @@ public class CalculationContextKafkaProducer {
         if (this.producer != null) {
             Gson gson = new Gson();
 
-            System.out.println("CCC >>> " + calculationContext.getPricingGroup().getName() + " " + calculationContext.getMarkets());
+            LOGGER.info("CCC >>> " + calculationContext.getPricingGroup().getName() + " " + calculationContext.getMarkets());
 
             ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, calculationContext.getCalculationContextId().getId(), gson.toJson(calculationContext));
             try {
