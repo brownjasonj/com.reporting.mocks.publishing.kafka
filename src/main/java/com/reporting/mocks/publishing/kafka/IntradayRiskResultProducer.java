@@ -40,7 +40,7 @@ public class IntradayRiskResultProducer {
         if (this.producer != null) {
             Gson gson = new Gson();
             String riskResultJson = gson.toJson(riskResult);
-            LOGGER.info("IRR >>> " + riskResult.getRiskRunId() + " [" + riskResult.getFragmentNo() + "/" + riskResult.getFragmentCount() + "] " + riskResult.getMarketEnvId() + " " + riskResult.getRisk().getRiskType() + " " + riskResult.getRisk().getBookName() + " " + riskResult.getRisk().getTcn().toString());
+            LOGGER.fine("IRR >>> " + riskResult.getRiskRunId() + " [" + riskResult.getFragmentNo() + "/" + riskResult.getFragmentCount() + "] " + riskResult.getMarketEnvId() + " " + riskResult.getRisk().getRiskType() + " " + riskResult.getRisk().getBookName() + " " + riskResult.getRisk().getTcn().toString());
             LOGGER.finest(riskResultJson);
             // System.out.println("IRR >>> " + riskResult.getRiskRunId() + " [" + riskResult.getFragmentNo() + "/" + riskResult.getFragmentCount() + "] " + riskResult.getMarketEnvId() + " " + riskResult.getRisk().getRiskType() + " " + riskResult.getRisk().getBookName() + " " + riskResult.getRisk().getTcn().toString());
             ProducerRecord<UUID, String> record = new ProducerRecord<>(this.TOPIC, riskResult.getRiskRunId().getId(), riskResultJson);

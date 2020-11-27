@@ -43,7 +43,7 @@ public class TradeProducer {
             case Delete:
                 trade = tradeLifecycle.getTradeBeforeLifeCycle();
         }
-        LOGGER.info("TLE >>> " + tradeLifecycle.getLifecycleType() + " " + trade.getBook() + " " + trade.getTradeType() + " " + trade.getTcn() + " " );
+        LOGGER.fine("TLE >>> " + tradeLifecycle.getLifecycleType() + " " + trade.getBook() + " " + trade.getTradeType() + " " + trade.getTcn() + " " );
     }
 
     public void send(TradeLifecycle tradeLifecycle) {
