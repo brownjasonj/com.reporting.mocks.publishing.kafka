@@ -11,7 +11,7 @@
 
 	<groupId>com.reporting.mocks.publishing</groupId>
 	<artifactId>kafka</artifactId>
-	<version>0.18.0</version>
+	<version>0.19.0</version>
 	<packaging>jar</packaging>
 
 	<name>kafka</name>
@@ -19,7 +19,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<mocks.version>0.18.0</mocks.version>
+		<jackson.version>[2.9.10.5,)</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -37,11 +37,27 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.12</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
@@ -52,18 +68,12 @@
 		<dependency>
 			<groupId>com.reporting.mocks</groupId>
 			<artifactId>model</artifactId>
-			<version>${mocks.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.reporting.mocks</groupId>
 			<artifactId>interfaces</artifactId>
-			<version>${mocks.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.reporting.kafka</groupId>
-			<artifactId>serialization</artifactId>
-			<version>0.4.0</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
-
 </project>

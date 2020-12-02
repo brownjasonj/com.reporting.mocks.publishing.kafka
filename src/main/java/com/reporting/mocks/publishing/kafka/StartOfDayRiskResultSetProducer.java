@@ -26,7 +26,7 @@ public class StartOfDayRiskResultSetProducer {
         this.kafkaProperties = new Properties();
 
         this.kafkaProperties.put("bootstrap.servers", this.BOOTSTRAPSERVER);
-        this.kafkaProperties.put("key.serializer", "com.reporting.kafka.serialization.UUIDSerializer");
+        this.kafkaProperties.put("key.serializer", "com.reporting.mocks.publishing.kafka.serialization.UUIDSerializer");
         this.kafkaProperties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         if (this.TOPIC != null && !this.TOPIC.isEmpty())
