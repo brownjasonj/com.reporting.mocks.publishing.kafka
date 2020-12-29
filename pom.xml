@@ -11,10 +11,10 @@
 
 	<groupId>com.reporting.mocks.publishing</groupId>
 	<artifactId>kafka</artifactId>
-	<version>0.19.3</version>
+	<version>0.20.0</version>
 	<packaging>jar</packaging>
 
-	<name>kafka</name>
+	<name>com.reporting.mocks.publishing.kafka</name>
 	<description>Implementation </description>
 
 	<properties>
